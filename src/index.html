@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html dir="rtl" lang="fa-IR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>خرید و دانلود کتاب</title>
+    <link href="./output.css" rel="stylesheet" />
+    <script src="script.js" defer></script>
+    <link
+      rel="stylesheet"
+      href="../src/fontawesome-free-6.6.0-web/css/all.min.css"
+    />
+    <link href="https://fonts.cdnfonts.com/css/dana" rel="stylesheet" />
+    <link href="https://fonts.cdnfonts.com/css/tahoma" rel="stylesheet" />
+  </head>
+
+  <body class="bg-[#f0f3f5]">
+    <!--start::Header-->
+    <div class="block fixed  w-full bg-white  top-0 right-0 left-0 z-20 shadow-[0px_2px_6px_0px_#0000001a]">
+      <div
+        class=" flex items-center justify-center w-full max-w-7xl mx-auto   p-4 md:80px"
+      >
+        <div
+          class="relative flex items-center justify-between text-right shrink-0 w-full mx-auto px-3 md:h-20"
+        >
+          <!--start::Mobile::BurgerMenu-->
+          <div
+            class="w-10 p-1 flex justify-center shrink-0 bg-[#f3f3f4] border border-solid border-[#e8e8e8] rounded-xl md:hidden"
+          >
+            <button
+              onclick="toggleMobileNavMenu()"
+              class="inline-block transition-opacity duration-150 ease-linear"
+            >
+              <span id="burgerIcon" class="relative inline-block w-5 h-4">
+                <i class="fa-solid fa-bars fa-lg"></i>
+              </span>
+            </button>
+          </div>
+          <!--end::Mobile::BurgerMenu-->
+
+          <!--start::Desktop::Logo-->
+          <div class="shrink-0 h-11 hidden md:block">
+            <a href="#">
+              <img class="max-h-11" src="./image/logo-400.png" alt="logo" />
+            </a>
+          </div>
+          <!--end::Desktop::Logo-->
+
+          <!--start::SearchBar-->
+          <button
+            class="flex-end flex-grow inline-flex items-center bg-[#f3f3f4] border border-solid border-[#e8e8e8] rounded-xl mx-3 p-1 md:h-11 md:shrink-0 md:mx-8"
+          >
+            <svg
+              class="mr-2 ml-1 md:hidden"
+              xmlns="http://www.w3.org/2000/svg"
+              x="0px"
+              y="0px"
+              width="20px"
+              height="20px"
+              viewBox="0 0 24 24"
+            >
+              <path
+                d="M 9 2 C 5.1458514 2 2 5.1458514 2 9 C 2 12.854149 5.1458514 16 9 16 C 10.747998 16 12.345009 15.348024 13.574219 14.28125 L 14 14.707031 L 14 16 L 20 22 L 22 20 L 16 14 L 14.707031 14 L 14.28125 13.574219 C 15.348024 12.345009 16 10.747998 16 9 C 16 5.1458514 12.854149 2 9 2 z M 9 4 C 11.773268 4 14 6.2267316 14 9 C 14 11.773268 11.773268 14 9 14 C 6.2267316 14 4 11.773268 4 9 C 4 6.2267316 6.2267316 4 9 4 z"
+              ></path>
+            </svg>
+            <span class="text-sm ml-1 text-[#424242] font-primary md:hidden"
+              >جستجو در</span
+            >
+            <span
+              class="hidden text-base font-primary text-[#424242] md:inline-block"
+              >جستجو کتاب,نویسنده,ناشر</span
+            >
+            <img class="md:hidden" width="50px" src="./image/ketabrah.png" />
+          </button>
+          <!--end::SearchBar-->
+
+          <!--start::User::Account-->
+          <div
+            class="relative basis-9 fill-black inline-flex items-center  justify-center bg-[#f3f3f4] border border-solid border-[#e8e8e8] rounded-xl text-right  md:h-11 md:shrink-0"
+          >
+            <a
+              href="#"
+              class="flex items-center justify-center w-9 h-9 md:h-10 md:min-w-28"
+            >
+              <i class="fa-solid fa-circle-user"></i>
+              <span class="hidden mr-1 font-primary text-base md:inline-block"
+                >ورود / ثبت نام</span
+              >
+            </a>
+          </div>
+          <!--end::User::Account-->
+        </div>
+      </div>
+
+      <!--start::Desktop::Nav-->
+      <div
+        class="hidden relative items-start justify-between transition-height duration-300 mx-auto px-3 max-w-7xl md:flex"
+      >
+        <div class="translate-y-0 transition-transform duration-300 shrink-0">
+          <div class="relative flex font-primary">
+            <div>
+              <a
+                href="#"
+                class="flex items-center justify-start py-3 pl-4 text-sm border-b border-solid border-[#E8E8E8]"
+              >
+                <i class="fa-solid fa-house fa-lg" style="color: #5e942b"></i>
+                <span class="flex-grow mx-3">خانه</span>
+              </a>
+            </div>
+            <div>
+              <a
+                href="#"
+                class="flex items-center justify-start py-3 px-4 text-sm border-b border-solid border-[#E8E8E8]"
+              >
+               <i class="fa-solid fa-book fa-lg"  style="color: #5e942b"></i>
+                <span class="flex-grow mx-3">کتاب الکترونیک</span>
+              </a>
+            </div>
+            <div>
+              <a
+                href="#"
+                class="flex items-center justify-start py-3 px-4 text-sm border-b border-solid border-[#E8E8E8]"
+              >
+                <i
+                  class="fa-solid fa-headphones fa-lg"
+                  style="color: #5e942b"
+                ></i>
+                <span class="flex-grow mx-3">کتاب های صوتی</span>
+              </a>
+            </div>
+            <div>
+              <a
+                href="#"
+                class="flex items-center justify-start p-3 text-sm border-b border-solid border-[#E8E8E8]"
+              >
+                <span class="flex-grow mx-3">راهنمایی و پشتیبانی</span>
+              </a>
+            </div>
+            
+          </div>
+        </div>
+        <div class="translate-y-0 transition-transform duration-300 shrink-0">
+          <div>
+            <div>
+              <a
+                href="#"
+                class="flex items-center justify-start py-3 px-4 text-sm border-b border-solid border-[#E8E8E8]"
+              >
+                <i
+                  class="fa-regular fa-circle-down fa-lg"
+                  style="color: #5e942b"
+                ></i>
+                <span class="flex-grow mx-3 font-primary text-[#5e942b]">نصب اپلیکیشن کتابراه</span>
+              </a>
+            </div>
+
+          </div>
+
+        </div>
+      </div>
+      <!--end::Desktop::Nav-->
+    </div>
+
+    <!--start::Mobile::Nav-->
+    <div
+      id="mobileNavMenu"
+      class="hidden fixed top-14 left-0 right-0 bottom-0 w-full pt-3 mx-auto px-3 border-t border-solid border-[#e8e8e8] bg-white transition-opacity duration-200 ease-out max-w-7xl font-primary"
+    >
+      <ul class="mt-4">
+        <li>
+          <a
+            href="#"
+            class="flex items-center justify-start py-3 text-sm border-b border-solid border-[#E8E8E8]"
+          >
+            <i class="fa-solid fa-house fa-lg" style="color: #5e942b"></i>
+            <span class="flex-grow mx-3">خانه</span>
+            <i class="fa-solid fa-angle-up fa-rotate-270 fa-lg"></i>
+          </a>
+        </li>
+        <li>
+          <a
+            href="#"
+            class="flex items-center justify-start py-3 text-sm border-b border-solid border-[#E8E8E8]"
+          >
+            <i class="fa-solid fa-shapes fa-lg" style="color: #5e942b"></i>
+            <span class="flex-grow mx-3">دسته بندی کتاب ها</span>
+            <i class="fa-solid fa-angle-up fa-rotate-270 fa-lg"></i>
+          </a>
+        </li>
+        <li>
+          <a
+            href="#"
+            class="flex items-center justify-start py-3 text-sm border-b border-solid border-[#E8E8E8]"
+          >
+            <i class="fa-solid fa-headphones fa-lg" style="color: #5e942b"></i>
+            <span class="flex-grow mx-3">کتاب های صوتی</span>
+            <i class="fa-solid fa-angle-up fa-rotate-270 fa-lg"></i>
+          </a>
+        </li>
+        <li>
+          <a
+            href="#"
+            class="flex items-center justify-start py-3 text-sm border-b border-solid border-[#E8E8E8]"
+          >
+            <i
+              class="fa-solid fa-circle-question fa-lg"
+              style="color: #5e942b"
+            ></i>
+            <span class="flex-grow mx-3">راهنمایی و پشتیبانی</span>
+            <i class="fa-solid fa-angle-up fa-rotate-270 fa-lg"></i>
+          </a>
+        </li>
+        <li>
+          <a
+            href="#"
+            class="flex items-center justify-start py-3 text-sm border-b border-solid border-[#E8E8E8]"
+          >
+            <i
+              class="fa-regular fa-circle-down fa-lg"
+              style="color: #5e942b"
+            ></i>
+            <span class="flex-grow mx-3">نصب اپلیکیشن کتابراه</span>
+            <i class="fa-solid fa-angle-up fa-rotate-270 fa-lg"></i>
+          </a>
+        </li>
+      </ul>
+    </div>
+    <!--end::Mobile::Nav-->
+
+    <!--end::Header-->
+  </body>
+</html>
