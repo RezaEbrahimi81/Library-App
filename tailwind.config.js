@@ -21,8 +21,8 @@ module.exports = {
   
     extend: {
       colors: {
-        primary: '#FF4F5A',
-        secondary: '#6B6B6B',
+        primary: '#5e942b',
+        secondary: '#9E9E9E',
       },
       transitionProperty: {
         'height': 'height'
