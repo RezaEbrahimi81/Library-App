@@ -153,32 +153,40 @@ const showAllBtn = document.getElementById("showAllBtn");
 const authorsFilter = document.getElementById("authorsFilter");
 const langsFilter = document.getElementById("langsFilter");
 const genresFilter = document.getElementById("genresFilter");
+const paginationWall = document.getElementById("paginationWall");
+const pages = document.getElementById("paging");
+const nextPageBtn = document.getElementById("nextPageBtn");
+const pervPageBtn = document.getElementById("pervPageBtn");
 const selectedAuthors = [];
 const selectedLangs = [];
 const selectedGenres = [];
+let currentPage = 1 ;
+let perPage =  6;
+
+
+
 
 //functions
 function toggleMobileNavMenu() {
   const isHidden = mobileNavMenu.classList.toggle("hidden");
   if (isHidden) {
-    burgerIcon.innerHTML = 
-      ' <i class="fa-solid fa-bars fa-lg"></i>';
+    burgerIcon.innerHTML = ' <i class="fa-solid fa-bars fa-lg"></i>';
   } else {
     burgerIcon.innerHTML = '<i class="fa-solid fa-xmark"></i>';
   }
 }
- 
+
 function toggleFilterNav() {
- filterNav.classList.toggle("hidden");
+  filterNav.classList.toggle("hidden");
 }
-// grid grid-cols-1 md:grid-cols-3  justify-around pt-1 pb-3 md:pr-8 mx-auto transition-all ease-in-out duration-300
+
 
 function renderBooks(data) {
-  const template = data
-  .map((book) => {
-    return `
+  const template = data.slice((currentPage - 1) * perPage , perPage * currentPage)
+    .map((book) => {
+      return `
     <div
-    class="w-2/12 min-w-40 flex flex-col basis-2/12 shrink-0  my-[1.5%] mx-[1%]  max-w-52 relative min-h-28 align-center text-center  group"
+    class="w-2/12 min-w-40 flex flex-col basis-2/12 shrink-0  my-[0.5%] mx-auto  max-w-52 relative min-h-28 align-center text-center  group"
     >
     <img src="./image/${book.imgSrc}" class="min-h-28 h-[80%] leading-normal" />
     <div class="bg-[#323232cc] w-full h-[80%] absolute flex flex-col items-center justify-between top-0 left-0 opacity-0 group-hover:opacity-100" >
@@ -201,22 +209,24 @@ function renderBooks(data) {
     
     </div>
     `;
-  })
-  .join(" ");
+    })
+    .join(" ");
   row.innerHTML = template;
+  
+  renderPagination(data);
 }
 
 function renderAuthors() {
   const authorsData = [];
-  
+
   for (const book of booksData) {
     if (!authorsData.includes(book.author)) {
       authorsData.push(book.author);
     }
   }
   const authorsTemplate = authorsData
-  .map((author) => {
-    return `
+    .map((author) => {
+      return `
     <div class="">
     <label class="relative w-full flex gap-2 items-center pr-2 font-light text-right" for="${author}">
     <input 
@@ -238,60 +248,60 @@ function renderAuthors() {
     
     
     `;
-  })
-  .join("");
-  
+    })
+    .join("");
+
   authorsFilter.innerHTML = authorsTemplate;
 }
 
 function renderLangs() {
   const langsData = [];
-  
+
   for (const book of booksData) {
     if (!langsData.includes(book.language)) {
       langsData.push(book.language);
     }
   }
   const langsTemplate = langsData
-  .map((lang) => {
-    return `
+    .map((lang) => {
+      return `
     <div class="">
     <label class="relative w-full flex gap-2 items-center pr-2 font-light text-right" for="${lang}">
     <input 
-                    onclick="langSelection(event)"
-                    class="peer w-4 h-4 cursor-pointer appearance-none border rounded bg-white border-secondary checked:bg-primary"
-                    id="${lang}"
-                    type="checkbox"
-                    value="${lang}"
-                    />
-                    <span>${lang}</span>
-                    <span class="absolute text-white opacity-0 peer-checked:opacity-100 top-[58%] left-[90%] transform -translate-x-1/2 -translate-y-[65%]">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor" stroke="currentColor" stroke-width="1">
-                    <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
-                    </svg>
-                    </span>
-                    </label
-                    >
-                    </div>
+        onclick="langSelection(event)"
+        class="peer w-4 h-4 cursor-pointer appearance-none border rounded bg-white border-secondary checked:bg-primary"
+        id="${lang}"
+        type="checkbox"
+        value="${lang}"
+        />
+        <span>${lang}</span>
+        <span class="absolute text-white opacity-0 peer-checked:opacity-100 top-[58%] left-[90%] transform -translate-x-1/2 -translate-y-[65%]">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor" stroke="currentColor" stroke-width="1">
+        <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+        </svg>
+        </span>
+        </label
+        >
+        </div>
                     
                     
-                    `;
-                  })
-                  .join("");
-                  langsFilter.innerHTML += langsTemplate;
-                }
-                
- function renderGenres() {
-                  const genresData = [];
-                  
-                  for (const book of booksData) {
-                    if (!genresData.includes(book.genre)) {
-                      genresData.push(book.genre);
-                    }
-                  }
-                  const genresTemplate = genresData
-                  .map((genre) => {
-                    return `
+         `;
+    })
+    .join("");
+  langsFilter.innerHTML += langsTemplate;
+}
+
+function renderGenres() {
+  const genresData = [];
+
+  for (const book of booksData) {
+    if (!genresData.includes(book.genre)) {
+      genresData.push(book.genre);
+    }
+  }
+  const genresTemplate = genresData
+    .map((genre) => {
+      return `
                     <div class="">
                     <label class="relative w-full flex gap-2 items-center pr-2 font-light text-right" for="${genre}">
                     <input 
@@ -313,39 +323,58 @@ function renderLangs() {
                     
                     
                     `;
-                  })
-                  .join("");
-                  
-                  genresFilter.innerHTML = genresTemplate;
-                  
-                }
-                
+    })
+    .join("");
+
+  genresFilter.innerHTML = genresTemplate;
+}
+
+function renderPagination(data) {
+  const pagesCount = Math.ceil( data.length / perPage );
+  const template = [...new Array(pagesCount)].map((item , index) => {
+    const pageNum = index + 1 ;
+    const isActive = pageNum === currentPage;
+    return `
+    <a  onclick="setCurrentPage(${pageNum})"  class="bg-${isActive ? 'white' : '[#F3F3F4]'} pointer-events-${isActive ? 'none' : 'auto' } cursor-pointer text-${isActive ? 'black' : 'primary'} py-3 px-4 rounded">
+    ${pageNum}
+    </a> 
+    `
+  }).join("");
+  pages.innerHTML = template;
+
+  updateButtonVisibility(pagesCount);
+
+  
+  
+
+}
+
 function authorSelection(event) {
-                  if (event.target.checked) {
-                    selectedAuthors.push(event.target.value);
-                  } else {
-                    const foundAuthors = selectedAuthors.findIndex(
-                      (item) => item === event.target.value
-                    );
-                    selectedAuthors.splice(foundAuthors, 1);
-                  }
-                  
-                  booksFilter();
-                }
-                
+  if (event.target.checked) {
+    selectedAuthors.push(event.target.value);
+  } else {
+    const foundAuthors = selectedAuthors.findIndex(
+      (item) => item === event.target.value
+    );
+    selectedAuthors.splice(foundAuthors, 1);
+  }
+
+  booksFilter();
+}
+
 function langSelection(event) {
-                  if (event.target.checked) {
-                    selectedLangs.push(event.target.value);
-                  } else {
-                    const foundLangs = selectedLangs.findIndex(
-                      (item) => item === event.target.value
-                    );
-                    selectedLangs.splice(foundLangs, 1);
-                  }
-                  
-                  booksFilter();
-                }
-                
+  if (event.target.checked) {
+    selectedLangs.push(event.target.value);
+  } else {
+    const foundLangs = selectedLangs.findIndex(
+      (item) => item === event.target.value
+    );
+    selectedLangs.splice(foundLangs, 1);
+  }
+
+  booksFilter();
+}
+
 function genreSelection(event) {
   if (event.target.checked) {
     selectedGenres.push(event.target.value);
@@ -356,32 +385,30 @@ function genreSelection(event) {
     );
     selectedGenres.splice(foundGenres, 1);
   }
-  
+
   booksFilter();
 }
 
-function booksFilter() {
+function booksFilter(shouldRestPage) {
   let result = booksData;
   
-  if(selectedAuthors.length != 0) {
-    result = result.filter((item) =>
-      selectedAuthors.includes(item.author)
-  );
-}
+  if(!shouldRestPage) {
+    currentPage = 1;
+  }
 
-if(selectedLangs.length != 0){
-  result = result.filter(item => 
-    selectedLangs.includes(item.language)
-  );
-}
+  if (selectedAuthors.length != 0) {
+    result = result.filter((item) => selectedAuthors.includes(item.author));
+  }
 
-if(selectedGenres.length != 0) {
-  result = result.filter(item =>
-    selectedGenres.includes(item.genre)
-  );
-}
+  if (selectedLangs.length != 0) {
+    result = result.filter((item) => selectedLangs.includes(item.language));
+  }
 
-renderBooks(result);
+  if (selectedGenres.length != 0) {
+    result = result.filter((item) => selectedGenres.includes(item.genre));
+  }
+
+  renderBooks(result);
 }
 
 function toggleAuthorsList() {
@@ -397,45 +424,72 @@ function toggleAuthorsList() {
 function toggleLangsList() {
   const langsChevron = document.getElementById("langsChevron");
   const langsHidden = langsFilter.classList.toggle("hidden");
-  if (langsHidden){
+  if (langsHidden) {
     langsChevron.classList.toggle("fa-rotate-90");
   } else {
     langsChevron.classList.remove("fa-rotate-90");
   }
-  
 }
 
 function toggleGenresList() {
   const genresChevron = document.getElementById("genresChevron");
   const genresHidden = genresFilter.classList.toggle("hidden");
-  if (genresHidden){
+  if (genresHidden) {
     genresChevron.classList.toggle("fa-rotate-90");
   } else {
     genresChevron.classList.remove("fa-rotate-90");
   }
-  
-  
 }
 
 function toggleDisplay() {
-  const flexDisplay = "flex flex-grow justify-around  shrink-0 mx-auto pt-1 pb-3  pr-4  transition-all ease-in-out duration-300";
-  const gridDisplay = " grid grid-cols-1 md:grid-cols-3 mx-auto  justify-around pt-1 pb-3 md:pr-8  transition-all ease-in duration-300 ";
+  const flexDisplay =
+    "flex flex-grow justify-around gap-7  shrink-0 mx-auto pt-1 pb-3  px-8  transition-all ease-in-out duration-300";
+  const gridDisplay =
+    " grid grid-cols-1 md:grid-cols-3  mx-auto gap-7 justify-around pt-1 pb-3  transition-all ease-in-out duration-300 ";
 
-  
-  if(row.classList.contains("flex")) {
+  if (row.classList.contains("flex")) {
     showAllBtn.innerText = "مشاهده جزئی";
     row.className = gridDisplay;
+    paginationWall.classList.remove("hidden");
+    paginationWall.classList.toggle("flex");
   } else {
-    showAllBtn.innerText = "مشاهده همه"
+    showAllBtn.innerText = "مشاهده همه";
     row.className = flexDisplay;
+    paginationWall.classList.remove("flex");
+    paginationWall.classList.toggle("hidden");
   }
-  
 }
 
+function updateButtonVisibility(pagesCount) {
+  pervPageBtn.style.display = currentPage <= 1 ? 'none' : 'block';
+  nextPageBtn.style.display = currentPage >= pagesCount ? 'none' : 'block';
+}
 
+function nextPage() {
+  currentPage = currentPage + 1;
+  booksFilter(true);
+}
+
+function pervPage() {
+  currentPage = currentPage - 1;
+  booksFilter(true);
+}
+
+function setCurrentPage(page) {
+  currentPage = page;
+  booksFilter(true);
+  
+
+  
+ 
+}
+
+setCurrentPage();
+booksFilter();
+// toggleDisplay();
 // toggleFilterNav();
-// toggleGenresList();
-// toggleLangsList();
+toggleGenresList();
+toggleLangsList();
 // toggleAuthorsList();
 renderGenres();
 renderLangs();
